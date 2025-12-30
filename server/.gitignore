@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+dist/
+
+# Service account key - NEVER COMMIT
+serviceAccountKey.json
+*.json.backup
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*

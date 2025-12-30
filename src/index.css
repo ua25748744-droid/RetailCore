@@ -1,0 +1,410 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base Colors - Deep Dark Theme (Default) */
+    --color-bg-primary: 15 23 42;
+    /* slate-900 */
+    --color-bg-secondary: 30 41 59;
+    /* slate-800 */
+    --color-bg-card: 30 41 59;
+    /* slate-800 */
+
+    --color-text-primary: 248 250 252;
+    /* slate-50 */
+    --color-text-secondary: 148 163 184;
+    /* slate-400 */
+    --color-text-muted: 100 116 139;
+    /* slate-500 */
+    --color-border: 51 65 85;
+    /* slate-700 */
+
+    /* Brand Colors - Solid */
+    --color-brand-primary: 99 102 241;
+    /* indigo-500 */
+    --color-brand-secondary: 139 92 246;
+    /* violet-500 */
+    --color-brand-accent: 59 130 246;
+    /* blue-500 */
+
+    /* Semantic Colors */
+    --color-success: 34 197 94;
+    /* green-500 */
+    --color-warning: 245 158 11;
+    /* amber-500 */
+    --color-error: 239 68 68;
+    /* red-500 */
+
+    /* Sidebar & Header */
+    --color-sidebar-bg: 15 23 42;
+    /* slate-900 */
+    --color-header-bg: 30 41 59;
+    /* slate-800 */
+  }
+
+  [data-theme='light'] {
+    /* Base Colors - Clean Light Theme */
+    --color-bg-primary: 249 250 251;
+    /* gray-50 */
+    --color-bg-secondary: 255 255 255;
+    /* white */
+    --color-bg-card: 255 255 255;
+    /* white */
+
+    --color-text-primary: 17 24 39;
+    /* gray-900 */
+    --color-text-secondary: 75 85 99;
+    /* gray-600 */
+    --color-text-muted: 156 163 175;
+    /* gray-400 */
+    --color-border: 229 231 235;
+    /* gray-200 */
+
+    /* Brand Colors - Slightly darker for light mode visibility */
+    --color-brand-primary: 79 70 229;
+    /* indigo-600 */
+    --color-brand-secondary: 124 58 237;
+    /* violet-600 */
+    --color-brand-accent: 37 99 235;
+    /* blue-600 */
+
+    /* Semantic Colors - Darker for light mode */
+    --color-success: 22 163 74;
+    /* green-600 */
+    --color-warning: 217 119 6;
+    /* amber-600 */
+    --color-error: 220 38 38;
+    /* red-600 */
+
+    /* Sidebar & Header - Solid colors for light mode */
+    --color-sidebar-bg: 255 255 255;
+    /* white */
+    --color-header-bg: 255 255 255;
+    /* white */
+  }
+
+  body {
+    @apply antialiased overflow-x-hidden transition-colors duration-300;
+    font-family: 'Inter', sans-serif;
+    background-color: rgb(var(--color-bg-primary));
+    color: rgb(var(--color-text-primary));
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight;
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+@layer components {
+
+  /* Solid Card Styles (No Glass) */
+  .card {
+    @apply relative overflow-hidden border rounded-2xl p-6 shadow-sm transition-all duration-300;
+    background-color: rgb(var(--color-bg-card));
+    border-color: rgb(var(--color-border));
+  }
+
+  .card:hover {
+    @apply shadow-md;
+    border-color: rgb(var(--color-brand-primary) / 0.3);
+  }
+
+  /* Solid Panel */
+  .panel {
+    @apply rounded-2xl shadow-sm;
+    background-color: rgb(var(--color-bg-card));
+    border: 1px solid rgb(var(--color-border));
+  }
+
+  /* Buttons - Solid Colors */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply btn text-white shadow-sm;
+    background-color: rgb(var(--color-brand-primary));
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(var(--color-brand-primary) / 0.9);
+    @apply shadow-md;
+  }
+
+  .btn-secondary {
+    @apply btn text-foreground border;
+    background-color: rgb(var(--color-bg-secondary));
+    border-color: rgb(var(--color-border));
+  }
+
+  .btn-secondary:hover {
+    background-color: rgb(var(--color-bg-card));
+  }
+
+  .btn-ghost {
+    @apply btn text-muted;
+    background-color: transparent;
+  }
+
+  .btn-ghost:hover {
+    background-color: rgb(var(--color-bg-secondary));
+    @apply text-foreground;
+  }
+
+  .btn-danger {
+    @apply btn text-white shadow-sm;
+    background-color: rgb(var(--color-error));
+  }
+
+  .btn-danger:hover {
+    background-color: rgb(var(--color-error) / 0.9);
+  }
+
+  .btn-success {
+    @apply btn text-white shadow-sm;
+    background-color: rgb(var(--color-success));
+  }
+
+  .btn-success:hover {
+    background-color: rgb(var(--color-success) / 0.9);
+  }
+
+  /* Form Elements */
+  .input-field {
+    @apply w-full border rounded-xl px-4 py-2.5 text-foreground placeholder:text-muted focus:outline-none transition-all duration-200;
+    background-color: rgb(var(--color-bg-secondary));
+    border-color: rgb(var(--color-border));
+  }
+
+  .input-field:focus {
+    border-color: rgb(var(--color-brand-primary));
+    box-shadow: 0 0 0 3px rgb(var(--color-brand-primary) / 0.1);
+  }
+
+  .label {
+    @apply block text-sm font-medium mb-1.5;
+    color: rgb(var(--color-text-secondary));
+  }
+
+  /* Select Dropdown */
+  .select-field {
+    @apply w-full border rounded-xl px-4 py-2.5 text-foreground focus:outline-none transition-all duration-200 appearance-none cursor-pointer;
+    background-color: rgb(var(--color-bg-secondary));
+    border-color: rgb(var(--color-border));
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+
+  .select-field:focus {
+    border-color: rgb(var(--color-brand-primary));
+    box-shadow: 0 0 0 3px rgb(var(--color-brand-primary) / 0.1);
+  }
+
+  /* Table Styles */
+  .table-container {
+    @apply overflow-hidden rounded-xl border;
+    background-color: rgb(var(--color-bg-card));
+    border-color: rgb(var(--color-border));
+  }
+
+  .table-header {
+    @apply text-xs font-semibold uppercase tracking-wider;
+    background-color: rgb(var(--color-bg-secondary));
+    color: rgb(var(--color-text-secondary));
+  }
+
+  .table-row {
+    @apply border-t transition-colors duration-150;
+    border-color: rgb(var(--color-border));
+  }
+
+  .table-row:hover {
+    background-color: rgb(var(--color-bg-secondary) / 0.5);
+  }
+
+  /* Badge/Tag Styles */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    background-color: rgb(var(--color-brand-primary) / 0.1);
+    color: rgb(var(--color-brand-primary));
+  }
+
+  .badge-success {
+    background-color: rgb(var(--color-success) / 0.1);
+    color: rgb(var(--color-success));
+  }
+
+  .badge-warning {
+    background-color: rgb(var(--color-warning) / 0.1);
+    color: rgb(var(--color-warning));
+  }
+
+  .badge-error {
+    background-color: rgb(var(--color-error) / 0.1);
+    color: rgb(var(--color-error));
+  }
+
+  /* Sidebar Styles */
+  .sidebar {
+    background-color: rgb(var(--color-sidebar-bg));
+    border-color: rgb(var(--color-border));
+  }
+
+  /* Header Styles */
+  .header {
+    background-color: rgb(var(--color-header-bg));
+    border-color: rgb(var(--color-border));
+  }
+
+  /* Stats Card */
+  .stat-card {
+    @apply card p-5;
+  }
+
+  .stat-card-icon {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center;
+  }
+
+  .stat-card-icon-primary {
+    background-color: rgb(var(--color-brand-primary) / 0.1);
+    color: rgb(var(--color-brand-primary));
+  }
+
+  .stat-card-icon-success {
+    background-color: rgb(var(--color-success) / 0.1);
+    color: rgb(var(--color-success));
+  }
+
+  .stat-card-icon-warning {
+    background-color: rgb(var(--color-warning) / 0.1);
+    color: rgb(var(--color-warning));
+  }
+
+  .stat-card-icon-error {
+    background-color: rgb(var(--color-error) / 0.1);
+    color: rgb(var(--color-error));
+  }
+}
+
+/* Animations */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Scrollbar - Theme Aware */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full transition-colors;
+  background-color: rgb(var(--color-border));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--color-text-muted));
+}
+
+/* Focus Ring Utility */
+.focus-ring:focus {
+  @apply outline-none;
+  box-shadow: 0 0 0 3px rgb(var(--color-brand-primary) / 0.2);
+}
+
+/* Divider */
+.divider {
+  @apply border-t;
+  border-color: rgb(var(--color-border));
+}
+
+/* Theme-aware overrides for common slate classes */
+/* These override hardcoded slate colors to be theme-aware */
+
+/* Text colors - make them theme-aware */
+.text-slate-300 {
+  color: rgb(var(--color-text-primary)) !important;
+}
+
+.text-slate-400 {
+  color: rgb(var(--color-text-secondary)) !important;
+}
+
+.text-slate-500 {
+  color: rgb(var(--color-text-muted)) !important;
+}
+
+.text-slate-600 {
+  color: rgb(var(--color-text-muted)) !important;
+}
+
+/* Background colors - make them theme-aware */
+.bg-slate-700\/30,
+.bg-slate-700\/50,
+.bg-slate-800\/30,
+.bg-slate-800\/50 {
+  background-color: rgb(var(--color-bg-secondary) / 0.5) !important;
+}
+
+.bg-slate-700,
+.bg-slate-800 {
+  background-color: rgb(var(--color-bg-secondary)) !important;
+}
+
+/* Border colors - make them theme-aware */
+.border-slate-600\/50,
+.border-slate-700\/50 {
+  border-color: rgb(var(--color-border) / 0.5) !important;
+}
+
+.border-slate-600,
+.border-slate-700 {
+  border-color: rgb(var(--color-border)) !important;
+}
+
+/* Hover states */
+.hover\:border-slate-500\/50:hover,
+.hover\:border-slate-600\/50:hover {
+  border-color: rgb(var(--color-text-muted) / 0.5) !important;
+}
+
+.hover\:bg-slate-700:hover {
+  background-color: rgb(var(--color-bg-card)) !important;
+}
+
+/* Text white override for cards in light mode */
+[data-theme='light'] .text-white:not(.btn-primary):not(.btn-danger):not(.btn-success) {
+  color: rgb(var(--color-text-primary)) !important;
+}
