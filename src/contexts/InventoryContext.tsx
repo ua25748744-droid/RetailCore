@@ -343,9 +343,12 @@ export const InventoryProvider: React.FC<{ children: ReactNode }> = ({ children 
                     // Refresh from database to get the new ID
                     await refreshProducts();
                 } else {
-                    // Fallback to in-memory
+                    // Fallback to in-memory when database is not ready
+                    const maxId = products.length > 0
+                        ? Math.max(...products.map((p) => p.id ?? 0))
+                        : 0;
                     const newProduct: Product = {
-                        id: Math.max(...products.map((p) => p.id), 0) + 1,
+                        id: maxId + 1,
                         name: productData.name || '',
                         name_ur: productData.name_ur,
                         sku: productData.sku,
@@ -363,6 +366,7 @@ export const InventoryProvider: React.FC<{ children: ReactNode }> = ({ children 
                         updated_at: new Date().toISOString(),
                     };
                     setProducts((prev) => [...prev, newProduct]);
+                    console.log('Product added to local state with ID:', newProduct.id);
                 }
             }
         } catch (error) {
