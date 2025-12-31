@@ -153,23 +153,23 @@ const CartItemCard: React.FC<{
                     </p>
 
                     <div className="flex items-center justify-between mt-2">
-                        {/* Quantity Controls */}
-                        <div className="flex items-center gap-1">
+                        {/* Quantity Controls - Touch-friendly */}
+                        <div className="flex items-center gap-2">
                             <button
                                 onClick={() => onQuantityChange(quantity - 1)}
-                                className="w-7 h-7 rounded-lg bg-slate-600/50 hover:bg-slate-600 text-white flex items-center justify-center transition-colors"
+                                className="w-9 h-9 md:w-7 md:h-7 rounded-lg bg-slate-600/50 hover:bg-slate-600 active:bg-slate-500 text-white flex items-center justify-center transition-colors touch-target"
                             >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                                 </svg>
                             </button>
-                            <span className="w-8 text-center text-white font-medium">{quantity}</span>
+                            <span className="w-10 text-center text-white font-medium text-lg">{quantity}</span>
                             <button
                                 onClick={() => onQuantityChange(quantity + 1)}
                                 disabled={quantity >= product.quantity}
-                                className="w-7 h-7 rounded-lg bg-slate-600/50 hover:bg-slate-600 text-white flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-9 h-9 md:w-7 md:h-7 rounded-lg bg-slate-600/50 hover:bg-slate-600 active:bg-slate-500 text-white flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed touch-target"
                             >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-5 h-5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                 </svg>
                             </button>
