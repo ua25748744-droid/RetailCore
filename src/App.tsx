@@ -6,16 +6,17 @@ import { ReportsProvider } from './contexts/ReportsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { DatabaseProvider } from './contexts/DatabaseContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { SupplierProvider } from './contexts/SupplierContext';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { Navigation } from './components/Navigation';
 import { InventoryAlerts } from './components/InventoryAlerts';
-import { InventoryPage, POSPage, LedgerPage, ReportsPage, DashboardPage, SettingsPage, LoginPage } from './pages';
+import { InventoryPage, POSPage, LedgerPage, ReportsPage, DashboardPage, SettingsPage, LoginPage, SupplierPage } from './pages';
 import { LogOut } from 'lucide-react';
 import './i18n/index';
 import './index.css';
 
-type Page = 'dashboard' | 'inventory' | 'pos' | 'ledger' | 'reports' | 'settings';
+type Page = 'dashboard' | 'inventory' | 'pos' | 'ledger' | 'reports' | 'settings' | 'suppliers';
 
 const LoadingFallback: React.FC = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -107,6 +108,8 @@ const AuthenticatedContent: React.FC = () => {
         return <ReportsPage />;
       case 'settings':
         return <SettingsPage />;
+      case 'suppliers':
+        return <SupplierPage />;
       default:
         return <DashboardPage />;
     }
@@ -159,11 +162,13 @@ const App: React.FC = () => {
           <AuthProvider>
             <DatabaseProvider>
               <InventoryProvider>
-                <LedgerProvider>
-                  <ReportsProvider>
-                    <AppContent />
-                  </ReportsProvider>
-                </LedgerProvider>
+                <SupplierProvider>
+                  <LedgerProvider>
+                    <ReportsProvider>
+                      <AppContent />
+                    </ReportsProvider>
+                  </LedgerProvider>
+                </SupplierProvider>
               </InventoryProvider>
             </DatabaseProvider>
           </AuthProvider>

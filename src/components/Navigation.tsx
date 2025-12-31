@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { LayoutDashboard, Package, ShoppingCart, BookOpen, BarChart3, Settings, Bell } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, BookOpen, BarChart3, Settings, Bell, Truck } from 'lucide-react';
 import { useLowStockCount } from './InventoryAlerts';
 
-type Page = 'dashboard' | 'inventory' | 'pos' | 'ledger' | 'reports' | 'settings';
+type Page = 'dashboard' | 'inventory' | 'pos' | 'ledger' | 'reports' | 'settings' | 'suppliers';
 
 interface NavigationProps {
     currentPage: Page;
@@ -19,6 +19,10 @@ const navItems: { key: Page; icon: React.ReactNode }[] = [
     {
         key: 'inventory',
         icon: <Package />,
+    },
+    {
+        key: 'suppliers',
+        icon: <Truck />,
     },
     {
         key: 'pos',

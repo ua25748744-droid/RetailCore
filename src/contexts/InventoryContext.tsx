@@ -300,30 +300,52 @@ export const InventoryProvider: React.FC<{ children: ReactNode }> = ({ children 
         try {
             if (productData.id) {
                 // Update existing product
+                const existingProduct = products.find(p => p.id === productData.id);
+                if (!existingProduct) {
+                    throw new Error('Product not found');
+                }
+
+                // Merge existing data with updates
+                const updatedProduct: Product = {
+                    ...existingProduct,
+                    name: productData.name ?? existingProduct.name,
+                    name_ur: productData.name_ur ?? existingProduct.name_ur,
+                    sku: productData.sku ?? existingProduct.sku,
+                    barcode: productData.barcode ?? existingProduct.barcode,
+                    category_id: productData.category_id ?? existingProduct.category_id,
+                    cost_price: productData.cost_price ?? existingProduct.cost_price,
+                    selling_price: productData.selling_price ?? existingProduct.selling_price,
+                    quantity: productData.quantity ?? existingProduct.quantity,
+                    min_stock_level: productData.min_stock_level ?? existingProduct.min_stock_level,
+                    unit: productData.unit ?? existingProduct.unit,
+                    description: productData.description ?? existingProduct.description,
+                    updated_at: new Date().toISOString(),
+                };
+
                 if (isDatabaseReady()) {
                     await dbUpdateProduct(productData.id, {
-                        name: productData.name,
-                        name_ur: productData.name_ur,
-                        sku: productData.sku,
-                        barcode: productData.barcode,
-                        category_id: productData.category_id,
-                        cost_price: productData.cost_price,
-                        selling_price: productData.selling_price,
-                        quantity: productData.quantity,
-                        min_stock_level: productData.min_stock_level,
-                        unit: productData.unit,
-                        description: productData.description,
+                        name: updatedProduct.name,
+                        name_ur: updatedProduct.name_ur,
+                        sku: updatedProduct.sku,
+                        barcode: updatedProduct.barcode,
+                        category_id: updatedProduct.category_id,
+                        cost_price: updatedProduct.cost_price,
+                        selling_price: updatedProduct.selling_price,
+                        quantity: updatedProduct.quantity,
+                        min_stock_level: updatedProduct.min_stock_level,
+                        unit: updatedProduct.unit,
+                        description: updatedProduct.description,
                     });
                     console.log('Product updated in database:', productData.id);
                 }
-                // Update local state
+
+                // Update local state with the fully merged product
                 setProducts((prev) =>
                     prev.map((p) =>
-                        p.id === productData.id
-                            ? { ...p, ...productData, updated_at: new Date().toISOString() }
-                            : p
+                        p.id === productData.id ? updatedProduct : p
                     )
                 );
+                console.log('Product updated in local state:', updatedProduct.name);
             } else {
                 // Create new product
                 if (isDatabaseReady()) {

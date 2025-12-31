@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useInventory } from '../contexts/InventoryContext';
 import { pdfExport } from '../services/pdfExport';
-import { FileDown } from 'lucide-react';
+import { FileDown, Calendar } from 'lucide-react';
 import {
     OverviewStats,
     SalesSummaryCard,
@@ -16,18 +16,27 @@ export const ReportsPage: React.FC = () => {
     const { isRTL } = useLanguage();
     const { products } = useInventory();
 
-    // Get current date for display
-    const currentDate = new Date();
-    const dateFormatter = new Intl.DateTimeFormat(isRTL ? 'ur-PK' : 'en-PK', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    });
+    // Date range state
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const [startDate, setStartDate] = useState<string>(firstDayOfMonth.toISOString().split('T')[0]);
+    const [endDate, setEndDate] = useState<string>(today.toISOString().split('T')[0]);
+
+    // Format selected date range for display
+    const formatDateRange = () => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const formatter = new Intl.DateTimeFormat(isRTL ? 'ur-PK' : 'en-US', {
+            month: 'short',
+            day: 'numeric',
+        });
+        return `${formatter.format(start)} - ${formatter.format(end)}`;
+    };
 
     // Export handlers
     const handleExportSales = () => {
         pdfExport.salesReport({
-            dateRange: dateFormatter.format(currentDate),
+            dateRange: formatDateRange(),
             totalSales: 125000,
             totalTransactions: 45,
             averageOrderValue: 2778,
@@ -67,12 +76,30 @@ export const ReportsPage: React.FC = () => {
                             {isRTL ? 'کاروباری بصیرت اور تجزیات' : 'Business insights and analytics'}
                         </p>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <div className="card py-2 px-4 flex items-center gap-2">
-                            <svg className="w-4 h-4" style={{ color: 'rgb(var(--color-text-secondary))' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            <span className="text-sm" style={{ color: 'rgb(var(--color-text-primary))' }}>{dateFormatter.format(currentDate)}</span>
+                    <div className="flex flex-wrap items-center gap-3">
+                        {/* Date Range Picker */}
+                        <div className="card py-2 px-3 flex items-center gap-2">
+                            <Calendar className="w-4 h-4 text-muted" />
+                            <div className="flex items-center gap-2">
+                                <input
+                                    type="date"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                    max={endDate}
+                                    className="bg-transparent border-none text-sm text-foreground focus:outline-none cursor-pointer"
+                                    style={{ colorScheme: 'dark' }}
+                                />
+                                <span className="text-muted">→</span>
+                                <input
+                                    type="date"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                    min={startDate}
+                                    max={today.toISOString().split('T')[0]}
+                                    className="bg-transparent border-none text-sm text-foreground focus:outline-none cursor-pointer"
+                                    style={{ colorScheme: 'dark' }}
+                                />
+                            </div>
                         </div>
                         <button onClick={handleExportSales} className="btn-primary flex items-center gap-2">
                             <FileDown className="w-4 h-4" />
